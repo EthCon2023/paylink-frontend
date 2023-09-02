@@ -1,4 +1,5 @@
 import { Button, Layout, Space, theme } from "antd";
+import Image from "next/image";
 
 const { Header, Content, Footer } = Layout;
 
@@ -14,9 +15,10 @@ const LayoutProvider = ({ children }: any) => {
           display: "flex",
           alignItems: "center",
           backgroundColor: "transparent",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
         }}
       >
+        <Image src="/images/paylink.svg" width="50" height="50" alt={""} />
         <Space>
           <Button type="primary" size="large">
             Connect Wallet
@@ -24,7 +26,7 @@ const LayoutProvider = ({ children }: any) => {
           <Button size="large"> Google Login</Button>
         </Space>
       </Header>
-      <Content style={{ padding: "0 50px" }}>
+      <Content style={{ padding: "50px" }}>
         <div className="site-layout-content" style={{ height: "100vh" }}>
           {children}
         </div>

@@ -6,13 +6,18 @@ import {
   Divider,
   InputNumber,
   Modal,
+  QRCode,
+  Radio,
+  RadioChangeEvent,
   Row,
   Select,
   Space,
   Typography,
+  notification,
 } from "antd";
 import { PaperClipOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +25,8 @@ const { Title, Text } = Typography;
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showLinkType, setShowLinkType] = useState("qr");
+  const [api, contextHolder] = notification.useNotification();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -31,6 +38,34 @@ export default function Home() {
 
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const onChangeShowLinkType = ({ target: { value } }: RadioChangeEvent) => {
+    setShowLinkType(value);
+  };
+
+  const downloadQRCode = () => {
+    const canvas = document
+      .getElementById("myqrcode")
+      ?.querySelector<HTMLCanvasElement>("canvas");
+    if (canvas) {
+      const url = canvas.toDataURL();
+      const a = document.createElement("a");
+      a.download = "QRCode.png";
+      a.href = url;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
+
+  const clickToCopyLink = () => {
+    api.success({
+      message: `Notification topRight`,
+      description:
+        "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
+      placement: "topRight",
+    });
   };
 
   const handleChangeChains = (value: string) => {
@@ -48,15 +83,74 @@ export default function Home() {
   return (
     <Row>
       <Col span={24}>
+        {contextHolder}
         <Modal
-          title="Basic Modal"
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
+          footer
         >
           <Title level={2}> Here is your PayLink!</Title>
-          <Text>Share it with your intended recipient below.</Text>
-          <p>Some contents...</p>
+          <Text>Share the link below to your recipient</Text>
+          <br />
+          <br />
+          <Card>
+            <Space
+              direction="vertical"
+              size={"large"}
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              <Space>
+                <Title level={4}> Send via : </Title>
+                <Radio.Group
+                  defaultValue="qr"
+                  size="large"
+                  buttonStyle="solid"
+                  onChange={onChangeShowLinkType}
+                >
+                  <Radio.Button value="qr">QR Code</Radio.Button>
+                  <Radio.Button value="link">Link</Radio.Button>
+                  {/* <Radio.Button value="c">Beijing</Radio.Button> */}
+                </Radio.Group>
+              </Space>
+              {showLinkType === "qr" ? (
+                <div
+                  id="myqrcode"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <QRCode
+                    value="https://tap.tg"
+                    bgColor="#fff"
+                    style={{ marginBottom: 16 }}
+                    size={256}
+                  />
+                  <Button type="primary" onClick={downloadQRCode}>
+                    Download
+                  </Button>
+                </div>
+              ) : (
+                <CopyToClipboard text={"https://tap.tg"}>
+                  <Button
+                    type="primary"
+                    size="large"
+                    onClick={clickToCopyLink}
+                    style={{ margin: "60px 0px" }}
+                  >
+                    <PaperClipOutlined /> Click to Copy Link
+                  </Button>
+                </CopyToClipboard>
+              )}
+            </Space>
+          </Card>
         </Modal>
         <Space
           size={"large"}
@@ -138,7 +232,7 @@ export default function Home() {
                 style={{ width: "100%" }}
                 onClick={showModal}
               >
-                <PaperClipOutlined /> Create a PayLink
+                Create a PayLink
               </Button>
               <Text type="secondary">
                 Your link will automatically be copied to clipboard.

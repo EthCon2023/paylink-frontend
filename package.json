@@ -14,12 +14,14 @@
     "@metamask/sdk": "^0.6.0",
     "@types/node": "20.5.8",
     "@types/react": "18.2.21",
+    "@types/react-copy-to-clipboard": "^5.0.4",
     "@types/react-dom": "18.2.7",
     "antd": "^5.8.5",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "next": "13.4.19",
     "react": "18.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "18.2.0",
     "typescript": "5.2.2"
   }
