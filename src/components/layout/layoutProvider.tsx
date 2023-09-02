@@ -32,7 +32,7 @@ const LayoutProvider = ({ children }: any) => {
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>
-        Ant Design ©2023 Created by Ant UED
+        Pay Link ©2023 Created by POM Team
       </Footer>
     </Layout>
   );
