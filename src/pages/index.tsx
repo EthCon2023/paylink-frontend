@@ -18,17 +18,21 @@ import {
 import { PaperClipOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const { Title, Text } = Typography;
 
 export default function Home() {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showLinkType, setShowLinkType] = useState("qr");
   const [api, contextHolder] = notification.useNotification();
+  const [sendLink, setSendLink] = useState(router.pathname + "receive/" + 1);
 
   const showModal = () => {
+    setSendLink(router.pathname + "receive/" + 1);
     setIsModalOpen(true);
   };
 
@@ -61,9 +65,8 @@ export default function Home() {
 
   const clickToCopyLink = () => {
     api.success({
-      message: `Notification topRight`,
-      description:
-        "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
+      message: `Copied to clipboard!`,
+      description: sendLink,
       placement: "topRight",
     });
   };
@@ -128,7 +131,7 @@ export default function Home() {
                   }}
                 >
                   <QRCode
-                    value="https://tap.tg"
+                    value={sendLink}
                     bgColor="#fff"
                     style={{ marginBottom: 16 }}
                     size={256}
@@ -138,7 +141,7 @@ export default function Home() {
                   </Button>
                 </div>
               ) : (
-                <CopyToClipboard text={"https://tap.tg"}>
+                <CopyToClipboard text={sendLink}>
                   <Button
                     type="primary"
                     size="large"

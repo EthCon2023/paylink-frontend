@@ -1,9 +1,11 @@
 import { Button, Layout, Space, theme } from "antd";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const { Header, Content, Footer } = Layout;
 
 const LayoutProvider = ({ children }: any) => {
+  const router = useRouter();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -18,7 +20,14 @@ const LayoutProvider = ({ children }: any) => {
           justifyContent: "space-between",
         }}
       >
-        <Image src="/images/paylink.svg" width="50" height="50" alt={""} />
+        <Image
+          src="/images/paylink.svg"
+          width="50"
+          height="50"
+          alt={""}
+          style={{ cursor: "pointer" }}
+          onClick={() => router.push("/")}
+        />
         <Space>
           <Button type="primary" size="large">
             Connect Wallet
