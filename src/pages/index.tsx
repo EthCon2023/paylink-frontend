@@ -19,7 +19,6 @@ import { PaperClipOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { useRouter } from "next/router";
-import { writeContract } from 'wagmi/actions'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +32,7 @@ export default function Home() {
   const [sendLink, setSendLink] = useState(router.pathname + "receive/" + 1);
 
   const showModal = () => {
-      const { hash } = await writeContract()
+    // const { hash } = await writeContract();
 
     setSendLink(router.pathname + "receive/" + 1);
     setIsModalOpen(true);
@@ -51,8 +50,7 @@ export default function Home() {
     setShowLinkType(value);
   };
 
-  const downloadQRCode = () => {
-  };
+  const downloadQRCode = () => {};
 
   const clickToCopyLink = () => {
     api.success({

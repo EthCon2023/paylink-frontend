@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
-import SocialLogin, { getSocialLoginSDK } from "@biconomy/web3-auth";
+import SocialLogin from "@biconomy/web3-auth";
 import { activeChainId } from "@/lib/chainConfig";
 
 interface web3AuthContextType {
