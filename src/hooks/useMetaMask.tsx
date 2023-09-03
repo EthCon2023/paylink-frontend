@@ -1,40 +1,40 @@
-import React, { type PropsWithChildren } from 'react'
+import React, { type PropsWithChildren } from "react";
 
-type ConnectAction = { type: 'connect'; wallet: string; balance: string }
-type DisconnectAction = { type: 'disconnect' }
+type ConnectAction = { type: "connect"; wallet: string; balance: string };
+type DisconnectAction = { type: "disconnect" };
 type PageLoadedAction = {
-  type: 'pageLoaded'
-  isMetaMaskInstalled: boolean
-  wallet: string | null
-  balance: string | null
-}
-type LoadingAction = { type: 'loading' }
-type IdleAction = { type: 'idle' }
+  type: "pageLoaded";
+  isMetaMaskInstalled: boolean;
+  wallet: string | null;
+  balance: string | null;
+};
+type LoadingAction = { type: "loading" };
+type IdleAction = { type: "idle" };
 
 type Action =
   | ConnectAction
   | DisconnectAction
   | PageLoadedAction
   | LoadingAction
-  | IdleAction
+  | IdleAction;
 
-type Dispatch = (action: Action) => void
+type Dispatch = (action: Action) => void;
 
-type Status = 'loading' | 'idle' | 'pageNotLoaded'
+type Status = "loading" | "idle" | "pageNotLoaded";
 
 type State = {
-  wallet: string | null
-  isMetaMaskInstalled: boolean
-  status: Status
-  balance: string | null
-}
+  wallet: string | null;
+  isMetaMaskInstalled: boolean;
+  status: Status;
+  balance: string | null;
+};
 
 const initialState: State = {
   wallet: null,
   isMetaMaskInstalled: false,
-  status: 'loading',
+  status: "loading",
   balance: null,
-} as const
+} as const;
 
 /**
  * It takes in a state and an action, and returns a new state
@@ -43,35 +43,36 @@ const initialState: State = {
  * @returns The state of the metamask reducer.
  */
 function metamaskReducer(state: State, action: Action): State {
+  if (typeof window === "undefined") return state;
   switch (action.type) {
-    case 'connect': {
-      const { wallet, balance } = action
-      const newState = { ...state, wallet, balance, status: 'idle' } as State
-      const info = JSON.stringify(newState)
-      window.localStorage.setItem('metamaskState', info)
+    case "connect": {
+      const { wallet, balance } = action;
+      const newState = { ...state, wallet, balance, status: "idle" } as State;
+      const info = JSON.stringify(newState);
+      window.localStorage.setItem("metamaskState", info);
 
-      return newState
+      return newState;
     }
-    case 'disconnect': {
-      window.localStorage.removeItem('metamaskState')
+    case "disconnect": {
+      window.localStorage.removeItem("metamaskState");
       if (typeof window.ethereum !== undefined) {
-        window.ethereum.removeAllListeners('accountsChanged')
+        window?.ethereum?.removeAllListeners("accountsChanged");
       }
-      return { ...state, wallet: null, balance: null }
+      return { ...state, wallet: null, balance: null };
     }
-    case 'pageLoaded': {
-      const { isMetaMaskInstalled, balance, wallet } = action
-      return { ...state, isMetaMaskInstalled, status: 'idle', wallet, balance }
+    case "pageLoaded": {
+      const { isMetaMaskInstalled, balance, wallet } = action;
+      return { ...state, isMetaMaskInstalled, status: "idle", wallet, balance };
     }
-    case 'loading': {
-      return { ...state, status: 'loading' }
+    case "loading": {
+      return { ...state, status: "loading" };
     }
-    case 'idle': {
-      return { ...state, status: 'idle' }
+    case "idle": {
+      return { ...state, status: "idle" };
     }
 
     default: {
-      throw new Error('Unhandled action type')
+      throw new Error("Unhandled action type");
     }
   }
 }
@@ -83,17 +84,17 @@ function metamaskReducer(state: State, action: Action): State {
  */
 const MetaMaskContext = React.createContext<
   { state: State; dispatch: Dispatch } | undefined
->(undefined)
+>(undefined);
 
 function MetaMaskProvider({ children }: PropsWithChildren) {
-  const [state, dispatch] = React.useReducer(metamaskReducer, initialState)
-  const value = { state, dispatch }
+  const [state, dispatch] = React.useReducer(metamaskReducer, initialState);
+  const value = { state, dispatch };
 
   return (
     <MetaMaskContext.Provider value={value}>
       {children}
     </MetaMaskContext.Provider>
-  )
+  );
 }
 
 /**
@@ -101,11 +102,11 @@ function MetaMaskProvider({ children }: PropsWithChildren) {
  * @returns The context object.
  */
 function useMetaMask() {
-  const context = React.useContext(MetaMaskContext)
+  const context = React.useContext(MetaMaskContext);
   if (context === undefined) {
-    throw new Error('useMetaMask must be used within a MetaMaskProvider')
+    throw new Error("useMetaMask must be used within a MetaMaskProvider");
   }
-  return context
+  return context;
 }
 
-export { MetaMaskProvider, useMetaMask }
+export { MetaMaskProvider, useMetaMask };

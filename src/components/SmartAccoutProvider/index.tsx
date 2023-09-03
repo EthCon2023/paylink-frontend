@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import SmartAccount from "@biconomy/smart-account";
-import { SmartAccountState, SmartAccountVersion } from "@biconomy/core-types";
+import { SmartAccountType, SmartAccountVersion } from "@biconomy/core-types";
 import { supportedChains, activeChainId } from "@/lib/chainConfig";
 import { useWeb3AuthContext } from "../SocialLoginProvider/index";
 
@@ -24,7 +24,7 @@ type ISmartAccount = {
 };
 type smartAccountContextType = {
   wallet: SmartAccount | null;
-  state: SmartAccountState | null;
+  state: SmartAccountType | null;
   balance: Balance;
   loading: boolean;
   isFetchingBalance: boolean;
@@ -61,7 +61,7 @@ export const useSmartAccountContext = () => useContext(SmartAccountContext);
 export const SmartAccountProvider = ({ children }: any) => {
   const { provider, address } = useWeb3AuthContext();
   const [wallet, setWallet] = useState<SmartAccount | null>(null);
-  const [state, setState] = useState<SmartAccountState | null>(null);
+  const [state, setState] = useState<any>(null);
   const [selectedAccount, setSelectedAccount] = useState<ISmartAccount | null>(
     null
   );

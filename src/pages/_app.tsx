@@ -70,8 +70,8 @@ export default function App({ Component, pageProps }: AppProps) {
           </SdkLayout>
         </MetaMaskProvider>
       </WagmiConfig>
-      // </SmartAccountProvider>
-      //  </Web3AuthProvider>
+      //   </SmartAccountProvider>
+      // </Web3AuthProvider>
     )
   );
 }

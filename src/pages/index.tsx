@@ -29,12 +29,14 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showLinkType, setShowLinkType] = useState("qr");
   const [api, contextHolder] = notification.useNotification();
-  const [sendLink, setSendLink] = useState(router.pathname + "receive/" + 1);
+  const [sendLink, setSendLink] = useState(
+    "https://localhost:3000/" + router.pathname + "receive/" + 1
+  );
 
   const showModal = () => {
     // const { hash } = await writeContract();
 
-    setSendLink(router.pathname + "receive/" + 1);
+    setSendLink("https://localhost:3000/" + router.pathname + "receive/" + 1);
     setIsModalOpen(true);
   };
 
