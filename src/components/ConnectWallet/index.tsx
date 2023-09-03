@@ -57,11 +57,14 @@ export function ConnectButton() {
         </Button>
       )}
       {isConnected ? (
-        <Button onClick={handleDisconnect} size="large">
-          Disconnect
-        </Button>
+        <>
+          0x4f2e4..42u3
+          <Button onClick={handleDisconnect} size="large">
+            Disconnect
+          </Button>
+        </>
       ) : (
-        "Please connect your MetaMask wallet"
+        ""
       )}
     </>
   );

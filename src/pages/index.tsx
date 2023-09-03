@@ -4,6 +4,7 @@ import {
   Card,
   Col,
   Divider,
+  Image,
   InputNumber,
   Modal,
   QRCode,
@@ -30,13 +31,13 @@ export default function Home() {
   const [showLinkType, setShowLinkType] = useState("qr");
   const [api, contextHolder] = notification.useNotification();
   const [sendLink, setSendLink] = useState(
-    "https://localhost:3000/" + router.pathname + "receive/" + 1
+    "https://localhost:3000" + router.pathname + "receive/" + 1
   );
 
   const showModal = () => {
     // const { hash } = await writeContract();
 
-    setSendLink("https://localhost:3000/" + router.pathname + "receive/" + 1);
+    setSendLink("https://localhost:3000" + router.pathname + "receive/" + 1);
     setIsModalOpen(true);
   };
 
@@ -156,10 +157,9 @@ export default function Home() {
             alignItems: "center",
           }}
         >
-          <Title>Links that are money</Title>
+          <Title>Pay Link that are money</Title>
           <Text type="secondary">
-            Send crypto & NFTs to anyone, even if they don&rsquo;t have a
-            wallet. No app needed!
+            Send crypto to anyone, even if they don&rsquo;t have a wallet.
           </Text>
           <Card style={{ width: "500px" }}>
             <Space
@@ -167,7 +167,7 @@ export default function Home() {
               style={{ display: "flex", width: "100%" }}
             >
               <Title level={4} style={{ textAlign: "center" }}>
-                Create your TipLink
+                Create your Pay Link
               </Title>
 
               <Title level={5}>Choose a chain</Title>
@@ -176,17 +176,18 @@ export default function Home() {
                 size="large"
                 style={{ width: "100%" }}
                 onChange={handleChangeChains}
-                // suffixIcon={
-                //   <Image
-                //     src={`/images/eth.png`}
-                //     width="20"
-                //     height="20"
-                //     alt={""}
-                //     style={{ borderRadius: "50%" }}
-                //   />
-                // }
+                suffixIcon={
+                  <Image
+                    src={`/images/eth.png`}
+                    width={20}
+                    height={20}
+                    alt={""}
+                    style={{ borderRadius: "50%" }}
+                  />
+                }
                 options={[
                   { value: "LINEA", label: "LINEA" },
+                  { value: "TAIKO", label: "TAIKO" },
                   { value: "POLYGON", label: "POLYGON" },
                   { value: "ETHEREUM", label: "ETHEREUM" },
                 ]}
@@ -205,17 +206,17 @@ export default function Home() {
                 type="secondary"
                 style={{ textAlign: "end", justifyContent: "flex-end" }}
               >
-                PayLink&rsquo;s available ETH: 0.001 ETH ($0.01)
+                PayLink&rsquo;s available ETH: 0.01 ETH ($0.01)
               </Text>
 
               <InputNumber<string>
                 style={{ width: "100%" }}
                 addonAfter={"ETH"}
                 size="large"
-                defaultValue="1"
+                defaultValue="0.01"
                 min="0"
                 max="10"
-                step="0.00000000000001"
+                step="0.01"
                 onChange={() => onChangeAmount}
                 stringMode
               />
