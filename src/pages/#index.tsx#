@@ -32,8 +32,10 @@ export default function Home() {
   const [api, contextHolder] = notification.useNotification();
   const [sendLink, setSendLink] = useState(router.pathname + "receive/" + 1);
 
-  const showModal = () => {
-      const { hash } = await writeContract()
+  async const showModal = () => {
+    const { hash } = await writeContract({
+      address: '0x519F3DDe8CBFD4EADA18f9A668db1d9F78216097'
+    })
 
     setSendLink(router.pathname + "receive/" + 1);
     setIsModalOpen(true);
