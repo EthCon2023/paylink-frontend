@@ -1,4 +1,4 @@
-import { Layout, Space, theme } from "antd";
+import { Button, Layout, Space, theme } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ConnectButton } from "../ConnectWallet/index";
@@ -34,7 +34,7 @@ const LayoutProvider = ({ children }: any) => {
           {router.pathname.includes("receive") && (
             <>
               <ConnectButton />
-              {/* <Button size="large"> Google Login</Button> */}
+              <Button size="large"> Google Login</Button>
             </>
           )}
         </Space>
